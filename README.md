@@ -3,11 +3,12 @@
 crypto-price-notifier provides the following functionality. User can:
 - define a threshold for an alert when cryptocurrency price goes above the defined limit (PUT /alert?pair=xxx-xxx&limit=100)
 - see alerts for the defined thresholds (websockets /alerts)
-- see his thresholds (websockets /thresholds)
+- view defined thresholds (websockets /thresholds)
 - delete an alert threshold (DELETE /alert?pair=xxx-xxx&limit=100)
 
 User is notified about the threshold only once. It means that when the alert happened for some threshold, user is notified, and this threshold is cancelled.
-User can define as many alert thresholds as he wishes. He also can cancel his alert (button 'Cancel' near the threshold in the list of My Thresholds')
+User can define as many alert thresholds as he wishes, but he cannot setup the same thresholds (when pair and limit are the same). 
+He also can cancel his alert (button 'Cancel' near the threshold in the list of My Thresholds').
 The application fetches trades from Bitfines cryptocurrency exchange (with the help of xchange library - https://github.com/knowm/XChange, and its streaming enhancement - https://github.com/bitrich-info/xchange-stream ). 
 
 The application comes with web UI (simple one but still user friendly).
