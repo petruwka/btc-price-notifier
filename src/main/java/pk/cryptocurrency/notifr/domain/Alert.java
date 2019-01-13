@@ -9,9 +9,10 @@ import lombok.ToString;
 
 @Getter
 @ToString
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 @EqualsAndHashCode
 public class Alert {
     private Threshold threshold;
+    private Trade trade;
 }
