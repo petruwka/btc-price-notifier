@@ -13,6 +13,7 @@ import java.time.Instant;
 @EqualsAndHashCode
 @Builder
 public class Trade {
+    private long tradeId;
     private Instant timestamp;
     private BigDecimal price;
 }

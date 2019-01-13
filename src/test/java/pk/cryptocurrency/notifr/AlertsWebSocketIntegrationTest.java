@@ -1,9 +1,17 @@
 package pk.cryptocurrency.notifr;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.knowm.xchange.currency.CurrencyPair;
+import org.knowm.xchange.dto.marketdata.Trade;
+import org.knowm.xchange.dto.marketdata.Trades;
+import org.knowm.xchange.service.marketdata.MarketDataService;
+import org.mockito.Mockito;
+import org.mockito.stubbing.Answer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.socket.WebSocketMessage;
@@ -17,8 +25,14 @@ import reactor.core.publisher.Mono;
 import reactor.core.publisher.ReplayProcessor;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.net.URI;
+import java.sql.Date;
 import java.time.Duration;
+import java.time.Instant;
+import java.util.Arrays;
+import java.util.List;
+import java.util.function.Supplier;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class AlertsWebSocketIntegrationTest {
@@ -27,9 +41,22 @@ public class AlertsWebSocketIntegrationTest {
     private int port;
     @Autowired
     private ObjectMapper objectMapper;
+    @MockBean
+    private MarketDataService marketDataService;
 
-    private final WebClient webClient = WebClient.builder().build();
     private final WebSocketClient socketClient = new ReactorNettyWebSocketClient();
+    private final WebClient webClient = WebClient.builder().build();
+
+    /**
+     * prepares mocks for marketDataService
+     * as marketDataService is an external service, we can't rely that it is functioning properly during our test
+     */
+    @BeforeEach
+    public void mockMarketDataService() throws IOException {
+        Mockito.doAnswer(returnTrades(this::usdTrades))
+                .when(marketDataService)
+                .getTrades(pair("BTC", "USD"), Mockito.any(), Mockito.any());
+    }
 
     @Test
     public void alertsShouldBePublishedToWebSocketClients() {
@@ -77,6 +104,34 @@ public class AlertsWebSocketIntegrationTest {
                 .doOnNext(System.out::println)
                 .blockLast();
 
-
     }
+
+    private Trades usdTrades() {
+        List<Trade> trades = Arrays.asList(
+                trade("BTC", "USD", BigDecimal.valueOf(400), Instant.now(), 1),
+                trade("BTC", "USD", BigDecimal.valueOf(500), Instant.now(), 2),
+                trade("BTC", "USD", BigDecimal.valueOf(600), Instant.now(), 3)
+        );
+        return new Trades(trades);
+    }
+
+    private Trade trade(String baseCurrency, String counterCurrency, BigDecimal price, Instant timestamp, long tradeId) {
+        return new Trade.Builder().currencyPair(new CurrencyPair(baseCurrency, counterCurrency))
+                .price(price)
+                .timestamp(Date.from(timestamp))
+                .id(String.valueOf(tradeId))
+                .build();
+    }
+
+    private CurrencyPair pair(String base, String counter) {
+        return Mockito.argThat((CurrencyPair pair) ->
+                base.equals(pair.base.getCurrencyCode())
+                        && counter.equals(pair.counter.getCurrencyCode()));
+    }
+
+    private Answer returnTrades(Supplier<Trades> tradesSupplier) {
+        return invocation -> tradesSupplier.get();
+    }
+
+
 }
