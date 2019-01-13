@@ -1,7 +1,7 @@
 package pk.cryptocurrency.notifr;
 
-import jdk.nashorn.internal.ir.annotations.Ignore;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.knowm.xchange.Exchange;
 import org.knowm.xchange.ExchangeFactory;
@@ -16,7 +16,7 @@ import java.io.IOException;
 public class XchangeFetchTest {
 
     @Test
-    @Ignore
+    @Disabled
     public void testTicketFetch() throws IOException {
         Exchange exchange = ExchangeFactory.INSTANCE.createExchange(BitfinexExchange.class.getName());
         MarketDataService marketDataService = exchange.getMarketDataService();

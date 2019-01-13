@@ -8,7 +8,7 @@ crypto-price-notifier provides the following functionality. User can:
 
 User is notified about the threshold only once. It means that when the alert happened for some threshold, user is notified, and this threshold is cancelled.
 User can define as many alert thresholds as he wishes. He also can cancel his alert (button 'Cancel' near the threshold in the list of My Thresholds')
-The application fetches trades from Bitfines cryptocurrency exchange (with the help of xchange library - https://github.com/knowm/XChange). 
+The application fetches trades from Bitfines cryptocurrency exchange (with the help of xchange library - https://github.com/knowm/XChange, and its streaming enhancement - https://github.com/bitrich-info/xchange-stream ). 
 
 The application comes with web UI (simple one but still user friendly).
 
@@ -16,8 +16,12 @@ The application comes with web UI (simple one but still user friendly).
 - currency pair has to be in format `base-counter` (e.g. BTC-USD)
 - no validation that currency is valid or exists
 - user won't be notified if error occurs
-- if remote exchange is unavailable, system will try to fetch indefinitely (or until user cancels the threshold) with delay >=10s (.retryBackoff(Long.MAX_VALUE, Duration.ofSeconds(10)))
+- in case if 'polling' profile active (see below), if remote exchange is unavailable, system will try to fetch indefinitely (or until user cancels the threshold) with delay >=10s (.retryBackoff(Long.MAX_VALUE, Duration.ofSeconds(10)))
 
+# polling vs streaming spring profiles
+By default, 'streaming' spring profile is active. It uses StremingMarketDataService (from xchange-stream library). 
+But the application can be started with 'polling' profile (--spring.profiles.active=polling) to use trade service which will use polling of Bitfinex exchange.
+'polling' mechanism is considered outdated.
 
 # how to build
 

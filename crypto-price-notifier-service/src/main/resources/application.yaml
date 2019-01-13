@@ -4,5 +4,7 @@ server:
 spring:
   main:
     web-application-type: reactive
+  profiles:
+    active: streaming
 
 #  level: debug
