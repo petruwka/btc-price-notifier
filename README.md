@@ -74,4 +74,5 @@ test folder of crypto-price-notifier-service has the following tests:
  - AlertsWebSocketIntegrationTest.java - 1 integration test
  - AlertEndpointTest.java - 2 web flux tests
  - AlertServiceTest.java - unit tests for AlertService
- - 2 classes (ThresholdService, ThresholdEventBridge) were not covered by unit tests
+ - ThresholdServiceTest.java - unit tests for ThresholdService
+ - class ThresholdEventBridge was not covered by unit tests
