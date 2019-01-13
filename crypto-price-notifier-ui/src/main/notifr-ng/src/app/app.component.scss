@@ -1,0 +1,23 @@
+
+.left-side {
+  width: 300px;
+  float: left;
+}
+
+app-alerts {
+  width: calc(100% - 300px);
+  float: left;
+}
+
+@media screen and (max-width: 600px) {
+  app-threshold-request-panel {
+    width: 100%;
+  }
+
+  app-alerts {
+    width: 100%;
+  }
+
+}
+
+

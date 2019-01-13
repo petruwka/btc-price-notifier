@@ -1,0 +1,16 @@
+<h3>Define Threshold</h3>
+<div class="threshold-form-wrapper" [formGroup]="form">
+  <mat-form-field>
+    <mat-label>Currency Pair</mat-label>
+    <input matInput placeholder="BTC-USD" formControlName="pair">
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Price Limit</mat-label>
+    <input matInput placeholder="500" formControlName="limit">
+  </mat-form-field>
+
+  <button mat-raised-button (click)="requestAlerts()">Notify me</button>
+
+
+</div>

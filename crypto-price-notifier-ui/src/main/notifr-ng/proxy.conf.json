@@ -1,0 +1,11 @@
+{
+  "/alerts": {
+    "target": "http://localhost:9090",
+    "secure": false,
+    "ws": true
+  },
+  "/alert": {
+    "target": "http://localhost:9090",
+    "secure": false
+  }
+}
