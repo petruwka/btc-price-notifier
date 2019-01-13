@@ -34,6 +34,7 @@ public class StreamingTradeService implements TradeService {
             return RxJava2Adapter.observableToFlux(streamingMarketDataService.getTrades(xchangePair), BackpressureStrategy.BUFFER)
                     .map(this::convertTrade)
                     .doOnNext(t -> log.info("Trade received: {}", t))
+                    .doOnError(e -> log.error("Trade stream error", e))
                     .share();
         });
 
