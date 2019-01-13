@@ -1,4 +1,4 @@
-package pk.cryptocurrency.notifr.cryptopricenotifier;
+package pk.cryptocurrency.notifr;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
