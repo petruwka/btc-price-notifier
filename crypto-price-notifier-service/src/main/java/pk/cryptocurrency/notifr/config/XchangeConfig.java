@@ -11,6 +11,7 @@ import org.knowm.xchange.bitfinex.v2.BitfinexExchange;
 import org.knowm.xchange.service.marketdata.MarketDataService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Profile;
 
 @Configuration
@@ -25,6 +26,7 @@ public class XchangeConfig {
     }
 
     @Bean
+    @Lazy
     @Profile("streaming")
     public StreamingExchange streamingExchange() {
         log.info("initializing StreamingExchange");
@@ -34,6 +36,7 @@ public class XchangeConfig {
     }
 
     @Bean
+    @Lazy
     @Profile("streaming")
     public StreamingMarketDataService streamingMarketDataService(StreamingExchange streamingExchange) {
         return streamingExchange.getStreamingMarketDataService();
