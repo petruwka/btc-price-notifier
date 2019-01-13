@@ -57,7 +57,10 @@ public class ThresholdEventBridge extends BaseSubscriber<ThresholdEvent> impleme
                 .take(1)
                 .subscribe(
                         trade -> broadcastAlert(threshold, trade),
-                        e -> log.warn("trades stream error", e),
+                        e -> {
+                            unsubscribe(threshold);
+                            log.warn("trades stream error", e);
+                        },
                         () -> unsubscribe(threshold)
                 );
     }

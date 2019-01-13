@@ -47,7 +47,7 @@ public class TradeService {
         @Override
         public void accept(FluxSink<Trade> tFluxSink) {
             Flux.generate(() -> fromTimestamp, this::fetchTrades)
-                    .retryBackoff(10, Duration.ofSeconds(10))
+                    .retryBackoff(Long.MAX_VALUE, Duration.ofSeconds(10))
                     .subscribe(new BaseSubscriber<List<Trade>>() {
                         @Override
                         protected void hookOnSubscribe(Subscription subscription) {
