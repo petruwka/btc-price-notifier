@@ -1,0 +1,6 @@
+<h3>My Thresholds</h3>
+<div class="thresholds">
+  <div *ngFor="let v of thresholds">
+    <app-threshold-label [thresholdEvent]="v" (cancel)="cancelSubscription($event)"></app-threshold-label>
+  </div>
+</div>

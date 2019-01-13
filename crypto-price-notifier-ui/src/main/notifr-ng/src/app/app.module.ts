@@ -14,12 +14,17 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
 import {ThresholdService} from "./api/threshold.service";
 import { AlertsComponent } from './alerts/alerts.component';
+import {ThresholdEventComponent} from "./threshold-label/threshold-event.component";
+import {MyThresholdsComponent} from "./my-thresholds/my-thresholds.component";
 
 @NgModule({
   declarations: [
     AppComponent,
     ThresholdRequestPanelComponent,
-    AlertsComponent
+    AlertsComponent,
+    MyThresholdsComponent,
+    ThresholdEventComponent
+
   ],
   imports: [
     BrowserModule,

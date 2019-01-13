@@ -1,0 +1,3 @@
+<span [ngClass]="{'deleted': deleted}">{{threshold.pair.base}}-{{threshold.pair.counter}} ({{threshold.limit}})</span>
+<button *ngIf="!deleted" mat-button (click)="cancelThreshold()">Cancel</button>
+
