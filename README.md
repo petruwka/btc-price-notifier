@@ -48,6 +48,8 @@ Run the command from folder `./crypto-price-notifier-service/target/`:
 
 `java -jar crypto-price-notifier-service-0.0.1-SNAPSHOT.jar`
 
+Open browser: http://localhost:9090/
+
 By default application will run on localhost 9090. You can supply custom port (e.g 9095) in the following way:
 `java -jar crypto-price-notifier-service-0.0.1-SNAPSHOT.jar --server.port=9095`
 
